@@ -11,3 +11,12 @@ resource "aws_route53_record" "www" {
   ttl     = 300
   records = [var.coldhand_ip]     # The IP you want to point to
 }
+
+resource "aws_route53_record" "api" {
+  count   = var.enable_route53 ? 1 : 0
+  zone_id = aws_route53_zone.primary[0].zone_id     # Your hosted zone ID
+  name    = "api.frosthand.com"    # Full domain name
+  type    = "A"
+  ttl     = 300
+  records = [var.coldhand_ip]     # The IP you want to point to
+}
